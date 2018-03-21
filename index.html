@@ -23,7 +23,7 @@ jQuery(document).ready(function () {
           $('div').html('Matching...');
           setTimeout(() => {
             $('div').html(`
-              <strong>Weather: ${res[0].summary}</strong><br>
+              <strong>Weather: ${res[0].summary}, ${res[0].apparentTemperature}&deg;</strong><br>
               <strong>Film 1: ${res[1][0].title}</strong><br>
               <img src="https://image.tmdb.org/t/p/w500/${res[1][0].poster_path}"><br>
               <strong>Film 2: ${res[1][1].title}</strong><br>
