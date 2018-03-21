@@ -24,8 +24,10 @@ jQuery(document).ready(function () {
           setTimeout(() => {
             $('div').html(`
               <strong>Weather: ${res[0].summary}, ${res[0].apparentTemperature}&deg;</strong><br>
+              <strong>Genre 1: ${res[2][0]}</strong><br>
               <strong>Film 1: ${res[1][0].title}</strong><br>
               <img src="https://image.tmdb.org/t/p/w500/${res[1][0].poster_path}"><br>
+              <strong>Genre 2: ${res[2][1]}</strong><br>
               <strong>Film 2: ${res[1][1].title}</strong><br>
               <img src="https://image.tmdb.org/t/p/w500/${res[1][1].poster_path}"><br>
             `);
