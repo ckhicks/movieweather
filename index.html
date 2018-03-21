@@ -13,21 +13,24 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 jQuery(document).ready(function () {
-  $('button').click(e => {
+  // $('button').click(e => {
     $('div').html('Fetching your location...');
     setTimeout(() => {
+      console.log('started');
       navigator.geolocation.getCurrentPosition(
         function success(pos) {
-          $('div').html('Finding movies...');
           let coords = pos.coords;
+          $('div').html('Finding movies...');
+          console.log(coords);
           $.get(`https://wt-2dbbcf5bf5af5b6e970f518f3e2755ee-0.run.webtask.io/movie-weather?lat=${coords.latitude}&lng=${coords.longitude}`, res => {
             $('div').html('Matching...');
+            console.log(res);
             setTimeout(() => {
               $('div').html(`
-                <strong>Weather: ${res[0].summary}, ${(res[0].apparentTemperature).toFixed()}&deg;</strong><br>
+                <strong>Weather: ${res[0].summary}, ${(res[0].apparentTemperature).toFixed()}&deg;</strong><br><br>
                 <strong>Genre 1: ${res[2][0]}</strong><br>
                 <strong>Film 1: ${res[1][0].title}</strong><br>
-                <img src="https://image.tmdb.org/t/p/w500/${res[1][0].poster_path}"><br>
+                <img src="https://image.tmdb.org/t/p/w500/${res[1][0].poster_path}"><br><br>
                 <strong>Genre 2: ${res[2][1]}</strong><br>
                 <strong>Film 2: ${res[1][1].title}</strong><br>
                 <img src="https://image.tmdb.org/t/p/w500/${res[1][1].poster_path}"><br>
@@ -43,7 +46,7 @@ jQuery(document).ready(function () {
         }
       );
     }, 500);
-  });
+  // });
 });
 </script>
 </body>
