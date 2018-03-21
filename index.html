@@ -18,6 +18,10 @@ jQuery(document).ready(function () {
       function success(pos) {
         console.log(pos);
         let coords = pos.coords;
+        $.get(`https://wt-2dbbcf5bf5af5b6e970f518f3e2755ee-0.run.webtask.io/movie-weather?lat=${coords.latitude}&lng=${coords.longitude}`, res => {
+          console.log(res);
+          //   // $('div').html();
+        });
       },
       null,
       options = {
@@ -26,10 +30,6 @@ jQuery(document).ready(function () {
         maximumAge: 0
       }
     );
-    $.get(`https://wt-2dbbcf5bf5af5b6e970f518f3e2755ee-0.run.webtask.io/movie-weather?lat=${coords.latitude}&lng=${coords.longitude}`, res => {
-      console.log(res);
-    //   // $('div').html();
-    });
   });
 });
 </script>
