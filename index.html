@@ -16,11 +16,13 @@ jQuery(document).ready(function () {
   $('button').click(e => {
     navigator.geolocation.getCurrentPosition(
       function success(pos) {
-        console.log(pos);
         let coords = pos.coords;
         $.get(`https://wt-2dbbcf5bf5af5b6e970f518f3e2755ee-0.run.webtask.io/movie-weather?lat=${coords.latitude}&lng=${coords.longitude}`, res => {
-          console.log(res);
-          //   // $('div').html();
+          $('div').html(`
+            <strong>Weather: ${res[0].summary}</strong><br>
+            <strong>Film 1: ${res[1][0].title}</strong><br>
+            <strong>Film 2: ${res[1][1].title}</strong><br>
+          `);
         });
       },
       null,
