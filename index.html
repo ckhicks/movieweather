@@ -17,11 +17,13 @@ jQuery(document).ready(function () {
   $('div').html('Fetching your location...');
   setTimeout(() => {
     console.log('started');
-    if (!location) {
+    if (!!location) {
+      location = JSON.parse(location);
+    } else {
       navigator.geolocation.getCurrentPosition(
         function success(pos) {
           location = pos.coords;
-          localStorage.setItem('location', location);
+          localStorage.setItem('location', JSON.stringify(location));
           getMovies();
         },
         null,
