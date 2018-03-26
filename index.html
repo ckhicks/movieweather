@@ -13,30 +13,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 jQuery(document).ready(function () {
-  // $('button').click(e => {
-    $('div').html('Fetching your location...');
-    setTimeout(() => {
-      console.log('started');
+  let location = localStorage.getItem('location');
+  $('div').html('Fetching your location...');
+  setTimeout(() => {
+    console.log('started');
+    if (!location) {
       navigator.geolocation.getCurrentPosition(
         function success(pos) {
-          let coords = pos.coords;
-          $('div').html('Finding movies...');
-          console.log(coords);
-          $.get(`https://wt-2dbbcf5bf5af5b6e970f518f3e2755ee-0.run.webtask.io/movie-weather?lat=${coords.latitude}&lng=${coords.longitude}`, res => {
-            $('div').html('Matching...');
-            console.log(res);
-            setTimeout(() => {
-              $('div').html(`
-                <strong>Weather: ${res[0].summary}, ${(res[0].apparentTemperature).toFixed()}&deg;</strong><br><br>
-                <strong>Genre 1: ${res[2][0]}</strong><br>
-                <strong>Film 1: ${res[1][0].title}</strong><br>
-                <img src="https://image.tmdb.org/t/p/w500/${res[1][0].poster_path}"><br><br>
-                <strong>Genre 2: ${res[2][1]}</strong><br>
-                <strong>Film 2: ${res[1][1].title}</strong><br>
-                <img src="https://image.tmdb.org/t/p/w500/${res[1][1].poster_path}"><br>
-              `);
-            }, 1000);
-          });
+          location = pos.coords;
+          localStorage.setItem('location', location);
+          getMovies();
         },
         null,
         options = {
@@ -45,8 +31,27 @@ jQuery(document).ready(function () {
           maximumAge: 0
         }
       );
-    }, 500);
-  // });
+    }
+  }, 500);
+  function getMovies() {
+    $('div').html('Finding movies...');
+    console.log(location);
+    $.get(`https://wt-2dbbcf5bf5af5b6e970f518f3e2755ee-0.run.webtask.io/movie-weather?lat=${location.latitude}&lng=${location.longitude}`, res => {
+      $('div').html('Matching...');
+      console.log(res);
+      setTimeout(() => {
+        $('div').html(`
+                <strong>Weather: ${res[0].summary}, ${(res[0].apparentTemperature).toFixed()}&deg;</strong><br><br>
+                <strong>Genre 1: ${res[2][0]}</strong><br>
+                <strong>Film 1: ${res[1][0].title}</strong><br>
+                <img src="https://image.tmdb.org/t/p/w500/${res[1][0].poster_path}"><br><br>
+                <strong>Genre 2: ${res[2][1]}</strong><br>
+                <strong>Film 2: ${res[1][1].title}</strong><br>
+                <img src="https://image.tmdb.org/t/p/w500/${res[1][1].poster_path}"><br>
+              `);
+      }, 1000);
+    });
+  }
 });
 </script>
 </body>
