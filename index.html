@@ -23,6 +23,7 @@ jQuery(document).ready(function () {
       navigator.geolocation.getCurrentPosition(
         function success(pos) {
           location = pos.coords;
+          console.log(location);
           localStorage.setItem('location', JSON.stringify(location));
           getMovies();
         },
